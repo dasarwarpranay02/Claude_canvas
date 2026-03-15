@@ -1,0 +1,50 @@
+{
+  "pipeline_id": "pipeline_20260315T103349Z",
+  "ticket_id": "UR-655",
+  "generated_at": "2026-03-15T12:02:00Z",
+  "critical_bugs": false,
+  "total_bugs": 1,
+  "bugs": [
+    {
+      "bug_id": "BUG-001",
+      "jira_key": "UR-661",
+      "jira_url": "https://247software.atlassian.net/rest/api/3/issue/108060",
+      "jira_self": "https://247software.atlassian.net/browse/UR-661",
+      "test_case_id": "TC-014",
+      "test_case_title": "Search with no matching term shows empty state",
+      "severity": "Medium",
+      "priority": "Medium",
+      "type": "Functional",
+      "is_critical": false,
+      "title": "[BUG][UR-655] Event Types search filter does not hide non-matching records",
+      "description": "The search/quick-filter input on the Event Types list page (#setup-header-grid-quick-search) does not filter the AG Grid data when a search term is entered that matches no existing event type name.",
+      "environment": "staging.247software.com",
+      "page_url": "https://staging.247software.com/#/setup-navigation/event-types",
+      "steps_to_reproduce": [
+        "Log in to staging.247software.com with Pranay / Pranay@1234",
+        "Navigate to Setup > Event Types (/#/setup-navigation/event-types)",
+        "In the search input (#setup-header-grid-quick-search), enter: XYZNONEXISTENT999",
+        "Wait 3-4 seconds",
+        "Observe the AG Grid rows"
+      ],
+      "expected_result": "Grid shows empty state (0 rows) or a 'No results found' message since no event type name matches 'XYZNONEXISTENT999'",
+      "actual_result": "Grid continues to display all existing event type records (e.g., '24/7 Mode') regardless of the non-matching search term entered",
+      "impact": "Users cannot effectively search/filter the Event Types list. This is a usability defect that affects list navigation when many event types exist.",
+      "playwright_evidence": {
+        "test_id": "TC-014",
+        "detail": "Visible non-empty rows: 1. Contents: [{\"text\":\"24/7 Mode\\n24/7 Mode is used for your day\",\"visible\":true}]",
+        "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-014.png",
+        "timestamp": "2026-03-15T11:59:55.121Z"
+      },
+      "related_requirement": "FR-008",
+      "tags": ["search", "filter", "event-types", "UR-655"]
+    }
+  ],
+  "notifications_sent": [
+    {
+      "channel": "Teams #qa-automation",
+      "message": "Bug detected in UR-655 testing: UR-661 — Event Types search filter not working (severity: Medium)",
+      "sent_at": "2026-03-15T12:02:00Z"
+    }
+  ]
+}

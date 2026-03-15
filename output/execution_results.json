@@ -1,0 +1,160 @@
+{
+  "pipeline_id": "pipeline_20260315T103349Z",
+  "ticket_id": "UR-655",
+  "executed_at": "2026-03-15T12:00:59.297Z",
+  "env": "staging",
+  "base_url": "https://staging.247software.com",
+  "event_types_url": "https://staging.247software.com/#/setup-navigation/event-types",
+  "summary": {
+    "passed": 17,
+    "failed": 1,
+    "skipped": 0,
+    "total": 18
+  },
+  "results": [
+    {
+      "id": "TC-001",
+      "title": "Navigate to Event Types from Setup menu",
+      "status": "PASS",
+      "detail": "URL: https://staging.247software.com/#/setup-navigation/event-types",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-001.png",
+      "timestamp": "2026-03-15T11:55:35.952Z"
+    },
+    {
+      "id": "TC-002",
+      "title": "Event Types list displays correct columns and data",
+      "status": "PASS",
+      "detail": "{\"title\":true,\"colET\":true,\"colDesc\":true,\"hasData\":true}",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-002.png",
+      "timestamp": "2026-03-15T11:55:49.681Z"
+    },
+    {
+      "id": "TC-003",
+      "title": "Create a new Event Type with valid data",
+      "status": "PASS",
+      "detail": "Created: TestEventType_1773575766540",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-003.png",
+      "timestamp": "2026-03-15T11:56:16.859Z"
+    },
+    {
+      "id": "TC-004",
+      "title": "Create Event Type form contains required fields and controls",
+      "status": "PASS",
+      "detail": "name=true facility=true save=true cancel=true icon=true",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-004.png",
+      "timestamp": "2026-03-15T11:56:34.290Z"
+    },
+    {
+      "id": "TC-005",
+      "title": "Edit an existing Event Type successfully",
+      "status": "PASS",
+      "detail": "Edited from \"TestEventType_1773575766540\"",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-005.png",
+      "timestamp": "2026-03-15T11:56:57.298Z"
+    },
+    {
+      "id": "TC-006",
+      "title": "Edit form pre-populates existing values",
+      "status": "PASS",
+      "detail": "Pre-filled: \"TestEventType_1773575766540_edited\"",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-006.png",
+      "timestamp": "2026-03-15T11:57:14.111Z"
+    },
+    {
+      "id": "TC-007",
+      "title": "Delete an Event Type successfully",
+      "status": "PASS",
+      "detail": "Row count reduced: 2 -> 1 deleteApi=true",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-007.png",
+      "timestamp": "2026-03-15T11:57:36.863Z"
+    },
+    {
+      "id": "TC-008",
+      "title": "Cancel delete keeps Event Type in list",
+      "status": "PASS",
+      "detail": "Record preserved after cancel",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-008.png",
+      "timestamp": "2026-03-15T11:57:55.676Z"
+    },
+    {
+      "id": "TC-009",
+      "title": "Validation error shown when Event Type name is empty",
+      "status": "PASS",
+      "detail": "Validation error detected",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-009.png",
+      "timestamp": "2026-03-15T11:58:16.157Z"
+    },
+    {
+      "id": "TC-010",
+      "title": "Validation error shown for whitespace-only Event Type name",
+      "status": "PASS",
+      "detail": "Whitespace rejected",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-010.png",
+      "timestamp": "2026-03-15T11:58:36.877Z"
+    },
+    {
+      "id": "TC-011",
+      "title": "Duplicate Event Type name is rejected with error",
+      "status": "PASS",
+      "detail": "Duplicate error shown",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-011.png",
+      "timestamp": "2026-03-15T11:59:03.135Z"
+    },
+    {
+      "id": "TC-012",
+      "title": "Created Event Types appear in downstream selector",
+      "status": "PASS",
+      "detail": "Event type visible downstream",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-012.png",
+      "timestamp": "2026-03-15T11:59:20.584Z"
+    },
+    {
+      "id": "TC-013",
+      "title": "Search input narrows Event Types list correctly",
+      "status": "PASS",
+      "detail": "Search matched",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-013.png",
+      "timestamp": "2026-03-15T11:59:36.853Z"
+    },
+    {
+      "id": "TC-014",
+      "title": "Search with no matching term shows empty state",
+      "status": "FAIL",
+      "detail": "Visible non-empty rows: 1. Contents: [{\"text\":\"24/7 Mode\\n24/7 Mode is used for your day\",\"visible\":true}]",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-014.png",
+      "timestamp": "2026-03-15T11:59:55.121Z"
+    },
+    {
+      "id": "TC-015",
+      "title": "Admin user has full CRUD access to Event Types",
+      "status": "PASS",
+      "detail": "add=true editCount=1 deleteCount=1 noErr=true",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-015.png",
+      "timestamp": "2026-03-15T12:00:08.836Z"
+    },
+    {
+      "id": "TC-016",
+      "title": "Event Types page UI elements are correctly rendered",
+      "status": "PASS",
+      "detail": "h4=\"Event Types\" cols=true",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-016.png",
+      "timestamp": "2026-03-15T12:00:22.570Z"
+    },
+    {
+      "id": "TC-017",
+      "title": "Create Event Type with maximum allowed character name",
+      "status": "PASS",
+      "detail": "Input len: 255. API status: 200. No crash: true",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-017.png",
+      "timestamp": "2026-03-15T12:00:49.600Z"
+    },
+    {
+      "id": "TC-018",
+      "title": "Event Types page loads within acceptable performance threshold",
+      "status": "PASS",
+      "detail": "1490ms (threshold 8000ms)",
+      "screenshot": "C:\\Users\\Crest\\Documents\\Testing_Agent_247\\output\\screenshots\\TC-018.png",
+      "timestamp": "2026-03-15T12:00:59.202Z"
+    }
+  ]
+}

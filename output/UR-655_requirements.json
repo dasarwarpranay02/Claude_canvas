@@ -1,0 +1,107 @@
+{
+  "ticket_id": "UR-655",
+  "jira_id": "107987",
+  "summary": "Verification task for Event types",
+  "description": "Verification task for Event types",
+  "project": {
+    "key": "UR",
+    "name": "UI/UX Redesign",
+    "id": "10374"
+  },
+  "issue_type": "Task",
+  "status": "New",
+  "priority": "Medium",
+  "assignee": "Pranay Dasarwar",
+  "reporter": "Juhi Kaushik",
+  "labels": ["Edge"],
+  "sprint": {
+    "id": 4097,
+    "name": "Team Edge - Sprint 69",
+    "state": "active",
+    "goal": "Setup Items: Incident Type, Document type, Reported Via, Priority\nMaps\nIncident Notification\nIncident Workflow\nActivity Categories\nRequest Type\nUser Manager\nTicketmaster Flyin"
+  },
+  "created": "2026-03-13T01:37:20.308-0400",
+  "updated": "2026-03-13T01:42:26.865-0400",
+  "story_points": 3.0,
+  "feature_area": "Event Types",
+  "base_url": "https://staging.247software.com/",
+  "functional_requirements": [
+    {
+      "id": "FR-001",
+      "description": "Verify that Event Types list page loads and is accessible from the Setup/Configuration menu",
+      "priority": "High",
+      "category": "Navigation"
+    },
+    {
+      "id": "FR-002",
+      "description": "Verify that a new Event Type can be created with valid data",
+      "priority": "High",
+      "category": "Create"
+    },
+    {
+      "id": "FR-003",
+      "description": "Verify that an existing Event Type can be edited and updated successfully",
+      "priority": "High",
+      "category": "Update"
+    },
+    {
+      "id": "FR-004",
+      "description": "Verify that an Event Type can be deleted and no longer appears in the list",
+      "priority": "Medium",
+      "category": "Delete"
+    },
+    {
+      "id": "FR-005",
+      "description": "Verify that Event Type name field is required and shows validation error when empty",
+      "priority": "High",
+      "category": "Validation"
+    },
+    {
+      "id": "FR-006",
+      "description": "Verify that duplicate Event Type names are not allowed and produce an appropriate error",
+      "priority": "Medium",
+      "category": "Validation"
+    },
+    {
+      "id": "FR-007",
+      "description": "Verify that Event Types appear correctly in downstream dropdowns and selectors",
+      "priority": "Medium",
+      "category": "Integration"
+    },
+    {
+      "id": "FR-008",
+      "description": "Verify search and filter functionality on the Event Types list",
+      "priority": "Low",
+      "category": "Search/Filter"
+    },
+    {
+      "id": "FR-009",
+      "description": "Verify that appropriate user role permissions are enforced for Event Type management",
+      "priority": "Medium",
+      "category": "Authorization"
+    },
+    {
+      "id": "FR-010",
+      "description": "Verify UI/UX elements: correct labels, button states, and responsive layout",
+      "priority": "Low",
+      "category": "UI/UX"
+    }
+  ],
+  "acceptance_criteria": [
+    "Event Types list page loads without errors when navigated from Setup menu",
+    "Create Event Type form submits successfully with valid name and saves to list",
+    "Edit Event Type form pre-populates existing values and saves updates correctly",
+    "Delete action removes the Event Type from the list after confirmation",
+    "Empty name submission shows a required-field validation error",
+    "Duplicate name submission shows a duplicate-entry error",
+    "Created Event Types appear in downstream event-type selectors",
+    "Search/filter on the list narrows results correctly",
+    "Unauthorized users cannot access Event Type management"
+  ],
+  "test_environment": {
+    "base_url": "https://staging.247software.com/",
+    "username": "Pranay",
+    "password": "Pranay@1234",
+    "env": "staging"
+  }
+}

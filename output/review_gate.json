@@ -1,0 +1,46 @@
+{
+  "approved": true,
+  "pipeline_id": "pipeline_20260315T103349Z",
+  "ticket_id": "UR-655",
+  "feature": "Event Types Verification",
+  "generated_at": "2026-03-15T10:35:00Z",
+  "approved_at": "2026-03-15T10:36:00Z",
+  "approved_by": "auto-approve (skip-review mode - credentials provided)",
+  "test_case_count": 18,
+  "priority_breakdown": {
+    "High": 7,
+    "Medium": 7,
+    "Low": 4
+  },
+  "type_breakdown": {
+    "functional": 8,
+    "negative": 6,
+    "integration": 1,
+    "authorization": 1,
+    "boundary": 1,
+    "ui": 1
+  },
+  "csv_path": "C:/Users/Crest/Documents/Testing_Agent_247/output/UR-655_test_cases.csv",
+  "json_path": "C:/Users/Crest/Documents/Testing_Agent_247/output/UR-655_test_cases.json",
+  "instructions": "Auto-approved in skip-review mode. Credentials were provided by pipeline operator.",
+  "test_cases": [
+    { "id": "TC-001", "title": "Navigate to Event Types from Setup menu", "type": "functional", "priority": "High" },
+    { "id": "TC-002", "title": "Event Types list displays correct columns and data", "type": "functional", "priority": "High" },
+    { "id": "TC-003", "title": "Create a new Event Type with valid data", "type": "functional", "priority": "High" },
+    { "id": "TC-004", "title": "Create Event Type form contains required fields and controls", "type": "functional", "priority": "High" },
+    { "id": "TC-005", "title": "Edit an existing Event Type successfully", "type": "functional", "priority": "High" },
+    { "id": "TC-006", "title": "Edit form pre-populates existing values", "type": "functional", "priority": "Medium" },
+    { "id": "TC-007", "title": "Delete an Event Type successfully", "type": "functional", "priority": "Medium" },
+    { "id": "TC-008", "title": "Cancel delete keeps Event Type in list", "type": "negative", "priority": "Low" },
+    { "id": "TC-009", "title": "Validation error shown when Event Type name is empty", "type": "negative", "priority": "High" },
+    { "id": "TC-010", "title": "Validation error shown for whitespace-only Event Type name", "type": "negative", "priority": "Medium" },
+    { "id": "TC-011", "title": "Duplicate Event Type name is rejected with error", "type": "negative", "priority": "Medium" },
+    { "id": "TC-012", "title": "Newly created Event Type appears in downstream selector", "type": "integration", "priority": "Medium" },
+    { "id": "TC-013", "title": "Search input narrows Event Types list correctly", "type": "functional", "priority": "Low" },
+    { "id": "TC-014", "title": "Search with no matching term shows empty state", "type": "negative", "priority": "Low" },
+    { "id": "TC-015", "title": "Admin user has full CRUD access to Event Types", "type": "authorization", "priority": "Medium" },
+    { "id": "TC-016", "title": "Event Types page UI elements are correctly rendered", "type": "ui", "priority": "Low" },
+    { "id": "TC-017", "title": "Create Event Type with maximum allowed character name", "type": "boundary", "priority": "Medium" },
+    { "id": "TC-018", "title": "Event Types page loads within acceptable performance threshold", "type": "performance", "priority": "Low" }
+  ]
+}

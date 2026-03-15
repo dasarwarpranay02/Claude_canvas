@@ -1,0 +1,311 @@
+{
+  "ticket_id": "UR-655",
+  "generated_at": "2026-03-15T10:35:00Z",
+  "total_cases": 18,
+  "test_cases": [
+    {
+      "id": "TC-001",
+      "requirement_ref": "FR-001",
+      "title": "Navigate to Event Types from Setup menu",
+      "description": "Verify that the Event Types list page is accessible from the Setup/Configuration navigation menu",
+      "preconditions": "User is logged in with admin credentials",
+      "steps": [
+        "Log in to https://staging.247software.com/ with Pranay / Pranay@1234",
+        "Locate the Setup or Configuration menu in the navigation",
+        "Click on Event Types menu item"
+      ],
+      "expected_result": "Event Types list page loads without errors and displays existing event types",
+      "type": "functional",
+      "priority": "High",
+      "tags": ["navigation", "smoke"]
+    },
+    {
+      "id": "TC-002",
+      "requirement_ref": "FR-001",
+      "title": "Event Types list displays correct columns and data",
+      "description": "Verify that the Event Types list shows the correct column headers and data rows",
+      "preconditions": "User is on the Event Types list page",
+      "steps": [
+        "Navigate to Event Types list page",
+        "Observe the table/list headers and content"
+      ],
+      "expected_result": "List shows at minimum a Name column; existing records are displayed without UI errors",
+      "type": "functional",
+      "priority": "High",
+      "tags": ["list", "smoke"]
+    },
+    {
+      "id": "TC-003",
+      "requirement_ref": "FR-002",
+      "title": "Create a new Event Type with valid data",
+      "description": "Verify a new Event Type can be created successfully with a unique name",
+      "preconditions": "User is on the Event Types list page",
+      "steps": [
+        "Click the Add / New / Create button on the Event Types list page",
+        "Enter a unique Event Type name: 'TestEventType_Auto'",
+        "Fill in any other required fields with valid values",
+        "Click Save / Submit"
+      ],
+      "expected_result": "New event type 'TestEventType_Auto' is created and appears in the list; a success notification is shown",
+      "type": "functional",
+      "priority": "High",
+      "tags": ["create", "smoke", "regression"],
+      "test_data": {
+        "event_type_name": "TestEventType_Auto"
+      }
+    },
+    {
+      "id": "TC-004",
+      "requirement_ref": "FR-002",
+      "title": "Create Event Type form contains required fields and controls",
+      "description": "Verify the Create Event Type form has all required input fields and action buttons",
+      "preconditions": "User is on the Event Types list page",
+      "steps": [
+        "Click the Add / New button",
+        "Observe the form that appears"
+      ],
+      "expected_result": "Form is displayed with at minimum a Name field and Save/Cancel buttons",
+      "type": "functional",
+      "priority": "High",
+      "tags": ["create", "ui"]
+    },
+    {
+      "id": "TC-005",
+      "requirement_ref": "FR-003",
+      "title": "Edit an existing Event Type successfully",
+      "description": "Verify that an existing Event Type can be edited and changes are persisted",
+      "preconditions": "At least one Event Type exists in the system",
+      "steps": [
+        "Navigate to Event Types list",
+        "Click the Edit/pencil icon on an existing Event Type",
+        "Modify the name to 'UpdatedEventType_Auto'",
+        "Click Save"
+      ],
+      "expected_result": "Event Type is updated with new name 'UpdatedEventType_Auto'; the list reflects the change; a success message is shown",
+      "type": "functional",
+      "priority": "High",
+      "tags": ["edit", "regression"],
+      "test_data": {
+        "updated_name": "UpdatedEventType_Auto"
+      }
+    },
+    {
+      "id": "TC-006",
+      "requirement_ref": "FR-003",
+      "title": "Edit form pre-populates existing values",
+      "description": "Verify the edit form loads with the current saved values pre-filled",
+      "preconditions": "At least one Event Type exists",
+      "steps": [
+        "Navigate to Event Types list",
+        "Click Edit on an existing record",
+        "Observe the form fields"
+      ],
+      "expected_result": "All form fields are pre-populated with the current saved values of the selected Event Type",
+      "type": "functional",
+      "priority": "Medium",
+      "tags": ["edit", "ui"]
+    },
+    {
+      "id": "TC-007",
+      "requirement_ref": "FR-004",
+      "title": "Delete an Event Type successfully",
+      "description": "Verify that an Event Type can be deleted and is permanently removed from the list",
+      "preconditions": "At least one deletable Event Type exists (e.g., 'TestEventType_Auto')",
+      "steps": [
+        "Navigate to Event Types list",
+        "Click the Delete/trash icon on the target Event Type",
+        "Confirm the deletion in the confirmation dialog"
+      ],
+      "expected_result": "Event Type is removed from the list; a success notification is shown; record no longer appears on page refresh",
+      "type": "functional",
+      "priority": "Medium",
+      "tags": ["delete", "regression"]
+    },
+    {
+      "id": "TC-008",
+      "requirement_ref": "FR-004",
+      "title": "Cancel delete keeps Event Type in list",
+      "description": "Verify cancelling the delete confirmation dialog does not remove the Event Type",
+      "preconditions": "At least one Event Type exists",
+      "steps": [
+        "Navigate to Event Types list",
+        "Click Delete on an Event Type",
+        "Click Cancel in the confirmation dialog"
+      ],
+      "expected_result": "Event Type remains in the list unchanged; no deletion occurs",
+      "type": "negative",
+      "priority": "Low",
+      "tags": ["delete", "negative"]
+    },
+    {
+      "id": "TC-009",
+      "requirement_ref": "FR-005",
+      "title": "Validation error shown when Event Type name is empty",
+      "description": "Verify required-field validation fires when the name is left blank on submit",
+      "preconditions": "Create Event Type form is open",
+      "steps": [
+        "Click Add to open the Create form",
+        "Leave the Name field blank",
+        "Click Save / Submit"
+      ],
+      "expected_result": "A validation error message is displayed indicating the Name field is required; no record is created",
+      "type": "negative",
+      "priority": "High",
+      "tags": ["validation", "negative", "regression"]
+    },
+    {
+      "id": "TC-010",
+      "requirement_ref": "FR-005",
+      "title": "Validation error shown for whitespace-only Event Type name",
+      "description": "Verify that a name consisting only of spaces is rejected as invalid",
+      "preconditions": "Create Event Type form is open",
+      "steps": [
+        "Click Add to open the Create form",
+        "Enter only spaces in the Name field",
+        "Click Save"
+      ],
+      "expected_result": "A validation error is shown; whitespace-only input is not accepted as a valid name",
+      "type": "negative",
+      "priority": "Medium",
+      "tags": ["validation", "negative"],
+      "test_data": {
+        "event_type_name": "   "
+      }
+    },
+    {
+      "id": "TC-011",
+      "requirement_ref": "FR-006",
+      "title": "Duplicate Event Type name is rejected with error",
+      "description": "Verify that creating an Event Type with an already-existing name produces a duplicate-entry error",
+      "preconditions": "An Event Type named 'TestEventType_Auto' already exists in the system",
+      "steps": [
+        "Click Add to open the Create form",
+        "Enter 'TestEventType_Auto' (existing name) in the Name field",
+        "Click Save"
+      ],
+      "expected_result": "An error message is displayed indicating the name is already in use; no duplicate record is created",
+      "type": "negative",
+      "priority": "Medium",
+      "tags": ["validation", "duplicate", "negative", "regression"],
+      "test_data": {
+        "event_type_name": "TestEventType_Auto"
+      }
+    },
+    {
+      "id": "TC-012",
+      "requirement_ref": "FR-007",
+      "title": "Newly created Event Type appears in downstream selector",
+      "description": "Verify that a newly created Event Type is available in event-type dropdowns elsewhere in the application",
+      "preconditions": "Event Type 'TestEventType_Auto' has been created",
+      "steps": [
+        "Navigate to a section that uses an Event Type dropdown (e.g., Incident creation form)",
+        "Open the Event Type selector/dropdown",
+        "Search or scroll for 'TestEventType_Auto'"
+      ],
+      "expected_result": "The newly created Event Type is available as an option in the downstream selector",
+      "type": "integration",
+      "priority": "Medium",
+      "tags": ["integration", "regression"]
+    },
+    {
+      "id": "TC-013",
+      "requirement_ref": "FR-008",
+      "title": "Search input narrows Event Types list correctly",
+      "description": "Verify the search or filter input on the Event Types list returns matching results",
+      "preconditions": "Multiple Event Types exist in the list",
+      "steps": [
+        "Navigate to Event Types list",
+        "Type a partial name into the search/filter input",
+        "Observe the list results"
+      ],
+      "expected_result": "Only Event Types matching the search term are displayed in the list",
+      "type": "functional",
+      "priority": "Low",
+      "tags": ["search", "filter"]
+    },
+    {
+      "id": "TC-014",
+      "requirement_ref": "FR-008",
+      "title": "Search with no matching term shows empty state",
+      "description": "Verify that searching for a non-existent Event Type shows an appropriate empty/no-results message",
+      "preconditions": "Event Types list page is open",
+      "steps": [
+        "Enter a search term that matches no existing Event Type (e.g., 'XYZNONEXISTENT999')",
+        "Observe the list"
+      ],
+      "expected_result": "List shows empty state or 'No results found' message with no records displayed",
+      "type": "negative",
+      "priority": "Low",
+      "tags": ["search", "negative"],
+      "test_data": {
+        "search_term": "XYZNONEXISTENT999"
+      }
+    },
+    {
+      "id": "TC-015",
+      "requirement_ref": "FR-009",
+      "title": "Admin user has full CRUD access to Event Types",
+      "description": "Verify admin-role user can view, create, edit and delete Event Types",
+      "preconditions": "Logged in as admin user (Pranay)",
+      "steps": [
+        "Navigate to Event Types",
+        "Verify Add, Edit, and Delete controls are visible",
+        "Confirm each control is functional"
+      ],
+      "expected_result": "Admin user sees and can use all CRUD controls on Event Types without permission errors",
+      "type": "authorization",
+      "priority": "Medium",
+      "tags": ["authorization", "regression"]
+    },
+    {
+      "id": "TC-016",
+      "requirement_ref": "FR-010",
+      "title": "Event Types page UI elements are correctly rendered",
+      "description": "Verify the Event Types page has correct labels, button text, and a responsive layout",
+      "preconditions": "User is on the Event Types list page",
+      "steps": [
+        "Navigate to Event Types list",
+        "Inspect page title, column headers, and action button labels",
+        "Resize browser to tablet width (768px) and check responsive layout"
+      ],
+      "expected_result": "Page title, labels, and buttons are correctly named; layout adapts responsively without content overflow",
+      "type": "ui",
+      "priority": "Low",
+      "tags": ["ui", "responsive"]
+    },
+    {
+      "id": "TC-017",
+      "requirement_ref": "FR-002",
+      "title": "Create Event Type with maximum allowed character name",
+      "description": "Verify system behavior when Event Type name is at the maximum character boundary",
+      "preconditions": "Create Event Type form is open",
+      "steps": [
+        "Click Add to open the Create form",
+        "Enter a name of exactly 255 characters",
+        "Click Save"
+      ],
+      "expected_result": "Event Type is created successfully OR a clear character-limit validation message is shown; no system error occurs",
+      "type": "boundary",
+      "priority": "Medium",
+      "tags": ["boundary", "validation"],
+      "test_data": {
+        "event_type_name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      }
+    },
+    {
+      "id": "TC-018",
+      "requirement_ref": "FR-001",
+      "title": "Event Types page loads within acceptable performance threshold",
+      "description": "Verify that the Event Types list page fully loads within 5 seconds",
+      "preconditions": "User is authenticated and has network access to staging",
+      "steps": [
+        "Navigate to Event Types list page",
+        "Measure time from navigation click to full page render"
+      ],
+      "expected_result": "Page fully renders within 5 seconds on a standard broadband connection",
+      "type": "performance",
+      "priority": "Low",
+      "tags": ["performance"]
+    }
+  ]
+}

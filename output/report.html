@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Execution Report — UR-655 Event Types Verification</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f9; color: #2d3748; }
+    header { background: linear-gradient(135deg, #1a56db 0%, #0e3a8a 100%); color: #fff; padding: 28px 40px; }
+    header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+    header .subtitle { font-size: 0.95rem; opacity: 0.85; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+    .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .meta-card { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .meta-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .05em; color: #718096; margin-bottom: 6px; }
+    .meta-card .value { font-size: 1.15rem; font-weight: 700; color: #2d3748; }
+
+    .summary-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .summary-card { border-radius: 10px; padding: 22px; text-align: center; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+    .summary-card.pass { background: linear-gradient(135deg, #38a169, #276749); }
+    .summary-card.fail { background: linear-gradient(135deg, #e53e3e, #9b2c2c); }
+    .summary-card.skip { background: linear-gradient(135deg, #d69e2e, #b7791f); }
+    .summary-card.total { background: linear-gradient(135deg, #4a5568, #2d3748); }
+    .summary-card .num { font-size: 2.6rem; font-weight: 800; line-height: 1; }
+    .summary-card .lab { font-size: 0.85rem; opacity: 0.9; margin-top: 4px; }
+
+    .progress-bar-wrap { background: #e2e8f0; border-radius: 99px; height: 12px; margin-bottom: 28px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #38a169, #68d391); transition: width 0.6s; }
+
+    section { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 24px; overflow: hidden; }
+    section h2 { font-size: 1rem; font-weight: 700; padding: 14px 20px; background: #edf2f7; border-bottom: 1px solid #e2e8f0; letter-spacing: .02em; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: #edf2f7; padding: 10px 14px; text-align: left; font-weight: 600; color: #4a5568; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 10px 14px; border-bottom: 1px solid #f0f4f8; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7fafc; }
+
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; letter-spacing: .04em; }
+    .badge.pass { background: #c6f6d5; color: #276749; }
+    .badge.fail { background: #fed7d7; color: #9b2c2c; }
+    .badge.skip { background: #fefcbf; color: #744210; }
+    .badge.high { background: #fed7d7; color: #9b2c2c; }
+    .badge.medium { background: #fef3c7; color: #92400e; }
+    .badge.low { background: #e0f2fe; color: #075985; }
+    .badge.critical { background: #9b2c2c; color: #fff; }
+
+    .bug-card { border-left: 4px solid #e53e3e; background: #fff5f5; padding: 16px 20px; margin: 12px 20px; border-radius: 6px; }
+    .bug-card h3 { font-size: 0.95rem; font-weight: 700; color: #c53030; margin-bottom: 8px; }
+    .bug-card .field { display: grid; grid-template-columns: 130px 1fr; gap: 4px; margin-bottom: 6px; font-size: 0.85rem; }
+    .bug-card .field-label { font-weight: 600; color: #4a5568; }
+
+    .req-table td:first-child { font-weight: 600; color: #2b6cb0; width: 80px; }
+
+    .pipeline-step { display: flex; align-items: flex-start; padding: 12px 20px; border-bottom: 1px solid #f0f4f8; }
+    .pipeline-step:last-child { border-bottom: none; }
+    .step-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff; flex-shrink: 0; margin-right: 14px; margin-top: 2px; }
+    .step-icon.ok { background: #38a169; }
+    .step-icon.bug { background: #e53e3e; }
+    .step-body { flex: 1; }
+    .step-body strong { display: block; font-size: 0.9rem; margin-bottom: 3px; }
+    .step-body span { font-size: 0.82rem; color: #718096; }
+
+    footer { text-align: center; padding: 24px; color: #a0aec0; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>QA Execution Report</h1>
+  <div class="subtitle">UR-655 — Verification task for Event Types | Staging Environment | 2026-03-15</div>
+</header>
+
+<div class="container">
+
+  <!-- Meta info -->
+  <div class="meta-grid">
+    <div class="meta-card"><div class="label">Pipeline ID</div><div class="value" style="font-size:.9rem">pipeline_20260315T103349Z</div></div>
+    <div class="meta-card"><div class="label">JIRA Ticket</div><div class="value"><a href="https://247software.atlassian.net/browse/UR-655" style="color:#1a56db;text-decoration:none">UR-655</a></div></div>
+    <div class="meta-card"><div class="label">Project</div><div class="value">UI/UX Redesign</div></div>
+    <div class="meta-card"><div class="label">Sprint</div><div class="value" style="font-size:.85rem">Team Edge — Sprint 69</div></div>
+    <div class="meta-card"><div class="label">Environment</div><div class="value">Staging</div></div>
+    <div class="meta-card"><div class="label">Executed At</div><div class="value" style="font-size:.85rem">2026-03-15 12:00 UTC</div></div>
+    <div class="meta-card"><div class="label">Base URL</div><div class="value" style="font-size:.8rem"><a href="https://staging.247software.com" style="color:#1a56db;text-decoration:none">staging.247software.com</a></div></div>
+    <div class="meta-card"><div class="label">Test Author</div><div class="value">QA Pipeline Bot</div></div>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="summary-row">
+    <div class="summary-card pass"><div class="num">17</div><div class="lab">PASSED</div></div>
+    <div class="summary-card fail"><div class="num">1</div><div class="lab">FAILED</div></div>
+    <div class="summary-card skip"><div class="num">0</div><div class="lab">SKIPPED</div></div>
+    <div class="summary-card total"><div class="num">18</div><div class="lab">TOTAL</div></div>
+  </div>
+
+  <!-- Pass rate bar -->
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+    <span style="font-size:.85rem;font-weight:700;color:#276749;white-space:nowrap">Pass Rate: 94.4%</span>
+    <div class="progress-bar-wrap" style="flex:1">
+      <div class="progress-bar" style="width:94.4%"></div>
+    </div>
+  </div>
+
+  <!-- Pipeline execution steps -->
+  <section>
+    <h2>Pipeline Execution Summary</h2>
+    <div class="pipeline-step">
+      <div class="step-icon ok">1</div>
+      <div class="step-body"><strong>JIRA Reader — UR-655 fetched</strong><span>Ticket: "Verification task for Event types" | Sprint 69 | Priority: Medium | 10 functional requirements extracted</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon ok">2</div>
+      <div class="step-body"><strong>Test Case Generator — 18 test cases generated</strong><span>High: 7 | Medium: 7 | Low: 4 | Types: functional, negative, integration, boundary, auth, UI, performance</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon ok">3</div>
+      <div class="step-body"><strong>Human Review Gate — Auto-approved (skip-review mode)</strong><span>18 test cases approved for execution at 2026-03-15T10:36:00Z</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon ok">4</div>
+      <div class="step-body"><strong>Test Data Manager — Staging seeded</strong><span>Staging reachable: HTTP 200 | Login: JWT authenticated | 1 existing event type found | Write API returns 503 (read-only staging) — Playwright UI seeding used</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon ok">5</div>
+      <div class="step-body"><strong>Test Executor — 18 tests executed (Playwright 1.58.2)</strong><span>PASS: 17 | FAIL: 1 | SKIP: 0 | Avg page load: 1490ms</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon bug">6</div>
+      <div class="step-body"><strong>Bug Detector — 1 bug found (severity: Medium)</strong><span>UR-661 created: Event Types search filter does not hide non-matching records</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon ok">7</div>
+      <div class="step-body"><strong>Report Generator — HTML report generated</strong><span>Full execution report with test results, requirements traceability, and bug summary</span></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon ok">8</div>
+      <div class="step-body"><strong>Code Committer — Scripts and reports committed to GitHub</strong><span>Repository: dasarwarpranay02/Claude_canvas | Playwright scripts + report + test data committed</span></div>
+    </div>
+  </section>
+
+  <!-- Bug Report -->
+  <section>
+    <h2>Bugs Detected (1)</h2>
+    <div class="bug-card">
+      <h3>UR-661 — Event Types search filter does not hide non-matching records</h3>
+      <div class="field"><span class="field-label">JIRA Key:</span><span><a href="https://247software.atlassian.net/browse/UR-661" style="color:#c53030">UR-661</a></span></div>
+      <div class="field"><span class="field-label">Test Case:</span><span>TC-014 — Search with no matching term shows empty state</span></div>
+      <div class="field"><span class="field-label">Severity:</span><span><span class="badge medium">Medium</span></span></div>
+      <div class="field"><span class="field-label">Page:</span><span>/#/setup-navigation/event-types</span></div>
+      <div class="field"><span class="field-label">Steps:</span><span>Navigate to Event Types, type 'XYZNONEXISTENT999' in search input, observe grid</span></div>
+      <div class="field"><span class="field-label">Expected:</span><span>Grid shows empty state / 0 records</span></div>
+      <div class="field"><span class="field-label">Actual:</span><span>All existing records (24/7 Mode) remain visible despite non-matching search</span></div>
+    </div>
+  </section>
+
+  <!-- Test Results Table -->
+  <section>
+    <h2>Test Execution Results</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Test Case Title</th>
+          <th>Type</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TC-001</td>
+          <td>Navigate to Event Types from Setup menu</td>
+          <td>Functional</td>
+          <td><span class="badge high">High</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>URL: .../#/setup-navigation/event-types</td>
+        </tr>
+        <tr>
+          <td>TC-002</td>
+          <td>Event Types list displays correct columns and data</td>
+          <td>Functional</td>
+          <td><span class="badge high">High</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>title=true colET=true colDesc=true hasData=true</td>
+        </tr>
+        <tr>
+          <td>TC-003</td>
+          <td>Create a new Event Type with valid data</td>
+          <td>Functional</td>
+          <td><span class="badge high">High</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Created: TestEventType_1773575766540 — API 200</td>
+        </tr>
+        <tr>
+          <td>TC-004</td>
+          <td>Create Event Type form contains required fields</td>
+          <td>Functional</td>
+          <td><span class="badge high">High</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>name=true facility=true save=true cancel=true icon=true</td>
+        </tr>
+        <tr>
+          <td>TC-005</td>
+          <td>Edit an existing Event Type successfully</td>
+          <td>Functional</td>
+          <td><span class="badge high">High</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Edited from "TestEventType_1773575766540" — API 200</td>
+        </tr>
+        <tr>
+          <td>TC-006</td>
+          <td>Edit form pre-populates existing values</td>
+          <td>Functional</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Pre-filled: "TestEventType_1773575766540_edited"</td>
+        </tr>
+        <tr>
+          <td>TC-007</td>
+          <td>Delete an Event Type successfully</td>
+          <td>Functional</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Row count: 2 → 1 | API /eventType/delete: 200 success</td>
+        </tr>
+        <tr>
+          <td>TC-008</td>
+          <td>Cancel delete keeps Event Type in list</td>
+          <td>Negative</td>
+          <td><span class="badge low">Low</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Record preserved after cancel</td>
+        </tr>
+        <tr>
+          <td>TC-009</td>
+          <td>Validation error on empty Event Type name</td>
+          <td>Negative</td>
+          <td><span class="badge high">High</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Validation error detected for empty name</td>
+        </tr>
+        <tr>
+          <td>TC-010</td>
+          <td>Validation error for whitespace-only name</td>
+          <td>Negative</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Whitespace-only input rejected</td>
+        </tr>
+        <tr>
+          <td>TC-011</td>
+          <td>Duplicate Event Type name is rejected</td>
+          <td>Negative</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Duplicate error shown for existing name</td>
+        </tr>
+        <tr>
+          <td>TC-012</td>
+          <td>Created Event Types appear in downstream selector</td>
+          <td>Integration</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Event type "24/7 Mode" visible in downstream Events page</td>
+        </tr>
+        <tr>
+          <td>TC-013</td>
+          <td>Search input narrows Event Types list</td>
+          <td>Functional</td>
+          <td><span class="badge low">Low</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Search term "24/7" matched "24/7 Mode" record</td>
+        </tr>
+        <tr style="background:#fff5f5">
+          <td>TC-014</td>
+          <td>Search with no matching term shows empty state</td>
+          <td>Negative</td>
+          <td><span class="badge low">Low</span></td>
+          <td><span class="badge fail">FAIL</span></td>
+          <td>BUG UR-661: Grid shows all records despite non-matching search "XYZNONEXISTENT999"</td>
+        </tr>
+        <tr>
+          <td>TC-015</td>
+          <td>Admin user has full CRUD access to Event Types</td>
+          <td>Authorization</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>add=true editCount=1 deleteCount=1 noErr=true</td>
+        </tr>
+        <tr>
+          <td>TC-016</td>
+          <td>Event Types page UI elements are correctly rendered</td>
+          <td>UI</td>
+          <td><span class="badge low">Low</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>h4="Event Types" cols=true breadcrumb=true</td>
+        </tr>
+        <tr>
+          <td>TC-017</td>
+          <td>Create Event Type with 255-char name (boundary)</td>
+          <td>Boundary</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Input len: 255. API status: 200. No crash.</td>
+        </tr>
+        <tr>
+          <td>TC-018</td>
+          <td>Event Types page loads within 8s performance threshold</td>
+          <td>Performance</td>
+          <td><span class="badge low">Low</span></td>
+          <td><span class="badge pass">PASS</span></td>
+          <td>Load time: 1490ms (well within 8000ms threshold)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Requirements Traceability -->
+  <section>
+    <h2>Requirements Traceability</h2>
+    <table>
+      <thead>
+        <tr><th>Req ID</th><th>Description</th><th>Category</th><th>Test Cases</th><th>Coverage</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>FR-001</td><td>Event Types list accessible from Setup menu</td><td>Navigation</td><td>TC-001, TC-002, TC-018</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-002</td><td>Create Event Type with valid data</td><td>Create</td><td>TC-003, TC-004, TC-017</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-003</td><td>Edit existing Event Type</td><td>Update</td><td>TC-005, TC-006</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-004</td><td>Delete Event Type</td><td>Delete</td><td>TC-007, TC-008</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-005</td><td>Required field validation</td><td>Validation</td><td>TC-009, TC-010</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-006</td><td>Duplicate name prevention</td><td>Validation</td><td>TC-011</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-007</td><td>Event Types in downstream selectors</td><td>Integration</td><td>TC-012</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-008</td><td>Search/filter functionality</td><td>Search</td><td>TC-013, TC-014</td><td><span class="badge fail">PARTIAL — BUG UR-661</span></td></tr>
+        <tr><td>FR-009</td><td>User role authorization</td><td>Authorization</td><td>TC-015</td><td><span class="badge pass">PASS</span></td></tr>
+        <tr><td>FR-010</td><td>UI/UX rendering</td><td>UI</td><td>TC-016</td><td><span class="badge pass">PASS</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Environment Info -->
+  <section>
+    <h2>Environment Configuration</h2>
+    <table>
+      <tbody>
+        <tr><td style="font-weight:600;width:200px">Environment</td><td>Staging</td></tr>
+        <tr><td style="font-weight:600">Base URL</td><td>https://staging.247software.com</td></tr>
+        <tr><td style="font-weight:600">Event Types Route</td><td>/#/setup-navigation/event-types</td></tr>
+        <tr><td style="font-weight:600">Test User</td><td>Pranay (Admin)</td></tr>
+        <tr><td style="font-weight:600">Browser</td><td>Chromium (headless) via Playwright 1.58.2</td></tr>
+        <tr><td style="font-weight:600">Node.js</td><td>v25.8.0</td></tr>
+        <tr><td style="font-weight:600">Staging Reachable</td><td>Yes (HTTP 200)</td></tr>
+        <tr><td style="font-weight:600">Auth Method</td><td>JWT (cookie: jwt_token + Authorization Bearer)</td></tr>
+        <tr><td style="font-weight:600">Write API Status</td><td>503 for direct POST (staging read-only API) — tests used UI automation</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<footer>
+  Generated by QA Pipeline Orchestrator — pipeline_20260315T103349Z — 2026-03-15T12:05:00Z
+</footer>
+
+</body>
+</html>

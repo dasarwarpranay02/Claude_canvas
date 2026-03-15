@@ -1,0 +1,14 @@
+[
+  {
+    "pipeline_id": "pipeline_1742000000",
+    "timestamp": "2026-03-15T00:00:00.000000",
+    "agent": "ORCHESTRATOR",
+    "status": "Pipeline started",
+    "data": {
+      "ticket_id": "UR-655",
+      "trigger_type": "manual",
+      "env": "staging",
+      "skip_human_review": false
+    }
+  }
+]

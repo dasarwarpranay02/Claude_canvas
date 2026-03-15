@@ -1,0 +1,55 @@
+{
+  "pipeline_id": "pipeline_20260315T103349Z",
+  "ticket_id": "UR-655",
+  "generated_at": "2026-03-15T10:40:00Z",
+  "env": "staging",
+  "base_url": "https://staging.247software.com/",
+  "credentials": {
+    "username": "Pranay",
+    "password": "Pranay@1234"
+  },
+  "auth": {
+    "login_endpoint": "/authenticate",
+    "token_type": "JWT",
+    "session_cookie": "session_id",
+    "token_cookie": "jwt_token",
+    "auth_method": "cookie + Authorization Bearer header"
+  },
+  "api_endpoints": {
+    "login": "POST /authenticate",
+    "event_types_list": "GET /eventType",
+    "event_type_create": "POST /addEventType (503 - write ops limited in staging)",
+    "event_type_delete": "DELETE /deleteEventType/{id} (to be verified)",
+    "event_type_update": "PUT /updateEventType/{id} (to be verified)"
+  },
+  "existing_test_data": {
+    "event_types": [
+      {
+        "name": "24/7 Mode",
+        "description": "24/7 Mode is used for your day-to-day operations which are not related to a specific event",
+        "icon": "fa fa-clock-o"
+      }
+    ],
+    "total_event_types": 1
+  },
+  "seeded_test_data": {
+    "note": "Write API operations return 503 in staging (read-only API mode). Test data seeding will be performed via Playwright UI automation.",
+    "test_event_type_to_create": {
+      "name": "TestEventType_Auto",
+      "description": "Automated QA test event type for UR-655 pipeline",
+      "icon": "fa fa-check"
+    },
+    "test_event_type_to_update": {
+      "original_name": "TestEventType_Auto",
+      "updated_name": "UpdatedEventType_Auto"
+    }
+  },
+  "environment_health": {
+    "staging_reachable": true,
+    "login_functional": true,
+    "read_api_functional": true,
+    "write_api_available": false,
+    "write_api_status": "503 - Service Temporarily Unavailable (read-only staging mode)",
+    "ui_automation_required": true
+  }
+}

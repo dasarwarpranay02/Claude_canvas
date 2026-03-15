@@ -1,0 +1,17 @@
+{
+  "pipeline_id": "pipeline_20260315T103349Z",
+  "ticket_id": "UR-655",
+  "report_path": "C:/Users/Crest/Documents/Testing_Agent_247/output/report.html",
+  "generated_at": "2026-03-15T12:05:00Z",
+  "summary": {
+    "passed": 17,
+    "failed": 1,
+    "skipped": 0,
+    "total": 18,
+    "pass_rate": "94.4%"
+  },
+  "bugs_created": ["UR-661"],
+  "critical_bugs": false,
+  "overall_health": "stable",
+  "coverage_percentage": 100.0
+}
